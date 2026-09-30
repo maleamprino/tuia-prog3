@@ -25,7 +25,7 @@ class UniformCostSearch:
         frontier.add(root, root.cost)
         
         while not frontier.is_empty():
-            node=frontier.remove()
+            node=frontier.pop()
             
             if grid.objective_test(node.state):
                 return Solution(node, reached)
@@ -34,7 +34,7 @@ class UniformCostSearch:
                 successor_state = grid.result(node.state, action)
                 cost=node.cost + grid.individual_cost(node.state, action)
                 if successor_state not in reached or cost < reached[successor_state]:
-                    child= Node(successor_state, cost, node, action,)
+                    child = Node("", state=successor_state, parent=node, action=action, cost=cost)
                     reached[successor_state]=cost
                     frontier.add(child, cost)
 
