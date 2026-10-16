@@ -45,23 +45,52 @@ def estrategia_minimax(tateti: Tateti, estado: List[List[str]]) -> Tuple[int, in
     Raises:
         NotImplementedError: Hasta que el alumno implemente el algoritmo
     """
-    # TODO: Implementar algoritmo minimax
+    def minimax(estado: List[List[str]]) -> float:
+        if tateti.test_terminal(estado):
+            return tateti.utilidad(estado)
+        jugador = tateti.jugador(estado)
+        acciones = tateti.acciones(estado)
 
-    # INSTRUCCIONES:
-    # 1. Eliminar la línea 'raise NotImplementedError...' de abajo
-    # 2. Implementar el algoritmo minimax aquí
-    # 3. La función debe retornar una tupla (fila, columna) con la mejor jugada
+        if jugador == JUGADOR_MAX:
+            mejor_valor = float("-inf")
 
-    raise NotImplementedError(
-        "\n" + "="*60 +
-        "\n🚫 ALGORITMO MINIMAX NO IMPLEMENTADO" +
-        "\n" + "="*60 +
-        "\n\nPara usar la estrategia Minimax debe implementarla primero." +
-        "\n\nInstrucciones:" +
-        "\n1. Abra el archivo 'estrategias.py'" +
-        "\n2. Busque la función 'estrategia_minimax()'" +
-        "\n3. Elimine la línea 'raise NotImplementedError(...)'" +
-        "\n4. Implemente el algoritmo minimax" +
-        "\n\nMientras tanto, use la 'Estrategia Aleatoria'." +
-        "\n" + "="*60
-    )
+            for accion in acciones:
+                nuevo_estado = tateti.resultado(estado, accion)
+                valor = minimax(nuevo_estado)
+                mejor_valor = max(mejor_valor, valor)
+            
+            return mejor_valor
+        else:
+            mejor_valor = float("inf")
+
+            for accion in acciones:
+                nuevo_estado = tateti.resultado(estado, accion)
+                valor = minimax(nuevo_estado)
+                mejor_valor = min(mejor_valor, valor)
+
+            return mejor_valor
+    jugador_actual = tateti.jugador(estado)
+    mejor_accion = None
+
+    if jugador_actual == JUGADOR_MAX:
+        mejor_valor = float("-inf")
+
+        for accion in tateti.acciones(estado):
+            nuevo_estado = tateti.resultado(estado, accion)
+            valor = minimax(nuevo_estado)
+
+            if valor > mejor_valor:
+                mejor_valor = valor
+                mejor_accion = accion
+    else:
+        mejor_valor = float("inf")
+
+        for accion in tateti.acciones(estado):
+            nuevo_estado = tateti.resultado(estado, accion)
+            valor = minimax(nuevo_estado)
+
+            if valor < mejor_valor:
+                mejor_valor = valor
+                mejor_accion = accion
+    
+    return mejor_accion
