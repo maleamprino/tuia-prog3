@@ -22,37 +22,30 @@ class DepthFirstSearch:
 
         expanded = dict()
 
-        # Inicializamos la frontera como una Pila (Stack)
+        #inicializamos la frontera como una Pila
         frontier = StackFrontier()
         frontier.add(root)
 
-        #Bucle principal: se ejecuta mientras haya nodos pendientes por explorar
         while not frontier.is_empty():
             node = frontier.remove()
 
             if node.state in expanded:
                 continue
 
-            # Marcamos el estado del nodo actual como expandido guardándolo en el diccionario
+            #marcamos el estado del nodo actual como expandido guardándolo en el diccionario
             expanded[node.state] = node
 
-            #Test del objetivo: ¿Llegamos a la meta?
             if grid.objective_test(node.state):
             #Si llegamos, retornamos la Solución con el nodo final y la lista de explorados
                 return Solution(node, expanded)
 
-            #Generamos los sucesores (vecinos válidos) del nodo actual
+            #generamos los sucesores del nodo actual
             for action in grid.actions(node.state):
-                #Obtenemos las coordenadas resultantes al aplicar la acción ("up", "down", etc.)
                 successor = grid.result(node.state, action)
 
-                # Si el vecino no fue expandido todavía, lo procesamos
                 if successor not in expanded:
 
-                    # Calculamos el costo acumulado usando la función oficial de la cátedra
                     cost = node.cost + grid.individual_cost(node.state, action)
-
-                    # Creamos el nuevo nodo hijo vinculándolo a su padre (node)
                     child = Node(
                         "",
                         state=successor,

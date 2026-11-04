@@ -24,7 +24,7 @@ def estrategia_aleatoria(tateti: Tateti, estado: List[List[str]]) -> Tuple[int, 
     return random.choice(acciones_disponibles)
 
 def _minimax_max(tateti: Tateti, estado: List[List[str]]) -> float:
-    """Calcula recursivamente el valor minimax en un nodo MAX."""
+    
     if tateti.test_terminal(estado):
         return tateti.utilidad(estado, JUGADOR_MAX)
     
@@ -35,7 +35,7 @@ def _minimax_max(tateti: Tateti, estado: List[List[str]]) -> float:
     return valor
 
 def _minimax_min(tateti: Tateti, estado: List[List[str]]) -> float:
-    """Calcula recursivamente el valor minimax en un nodo MIN."""
+    
     if tateti.test_terminal(estado):
         return tateti.utilidad(estado, JUGADOR_MAX)
     
@@ -46,10 +46,7 @@ def _minimax_min(tateti: Tateti, estado: List[List[str]]) -> float:
     return valor
 
 def estrategia_minimax(tateti: Tateti, estado: List[List[str]]) -> Tuple[int, int]:
-    """
-    Estrategia minimax: elige la mejor acción usando el algoritmo minimax tal
-    como se especifica en las diapositivas de la cátedra.
-    """
+
     jugador_actual = tateti.jugador(estado)
 
     if jugador_actual == JUGADOR_MAX:

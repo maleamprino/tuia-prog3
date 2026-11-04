@@ -15,7 +15,6 @@ class UniformCostSearch:
         Returns:
             Solution: Solution found
         """
-        # Initialize root node
         root = Node("", state=grid.initial, cost=0, parent=None, action=None)
 
         reached = {}
